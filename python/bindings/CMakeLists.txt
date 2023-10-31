@@ -54,6 +54,7 @@ list(APPEND satellites_python_files
     phase_unwrap_python.cc
     python_bindings.cc
     selector_python.cc
+    u482c_encode_python.cc
     u482c_decode_python.cc
     varlen_packet_framer_python.cc
     varlen_packet_tagger_python.cc
