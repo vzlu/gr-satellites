@@ -14,4 +14,4 @@ gr-satellites components
 These components are the basic high-level building blocks of gr-satellites.
 '''
 
-__all__ = ['deframers', 'demodulators', 'datasinks', 'transports']
+__all__ = ['deframers', 'demodulators', 'datasinks', 'transports', 'framers']

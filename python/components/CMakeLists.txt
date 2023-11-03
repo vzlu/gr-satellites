@@ -40,6 +40,7 @@ add_subdirectory(demodulators)
 add_subdirectory(datasinks)
 add_subdirectory(datasources)
 add_subdirectory(transports)
+add_subdirectory(framers)
 
 ########################################################################
 # Handle the unit tests

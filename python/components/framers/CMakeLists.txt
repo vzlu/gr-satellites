@@ -18,9 +18,26 @@
 # the Free Software Foundation, Inc., 51 Franklin Street,
 # Boston, MA 02110-1301, USA.
 
-add_subdirectory(deframers)
-add_subdirectory(demodulators)
-add_subdirectory(datasinks)
-add_subdirectory(datasources)
-add_subdirectory(transports)
-add_subdirectory(framers)
+########################################################################
+# Include python install macros
+########################################################################
+include(GrPython)
+if(NOT PYTHONINTERP_FOUND)
+    return()
+endif()
+
+########################################################################
+# Install python sources
+########################################################################
+GR_PYTHON_INSTALL(
+    FILES
+    __init__.py
+    ax100_framer.py
+    DESTINATION ${GR_PYTHON_DIR}/satellites/components/framers
+)
+
+########################################################################
+# Handle the unit tests
+########################################################################
+
+# TODO add tests

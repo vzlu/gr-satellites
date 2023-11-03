@@ -1,0 +1,56 @@
+id: satellites_ax100_framer
+label: GOMspace AX100 Framer
+category: '[Satellites]/Framers'
+
+parameters:
+-   id: mode
+    label: Mode
+    dtype: enum
+    default: '"RS"'
+    options: ['"RS"', '"ASM"']
+    option_labels: ['Reed Solomon', 'ASM+Golay']
+-   id: scrambler
+    label: Scrambler
+    dtype: enum
+    default: '"CCSDS"'
+    options: ['"CCSDS"', '"none"']
+    option_labels: [CCSDS, None]
+    hide: ${ 'none' if mode == '"ASM"' else 'all' }
+-   id: syncword
+    label: Syncword to use
+    dtype: string
+    default: '""'
+-   id: options
+    label: Command line options
+    dtype: string
+    default: '""'
+    hide: part
+
+inputs:
+-   domain: message
+    id: in
+
+outputs:
+-   domain: stream
+    dtype: float
+
+templates:
+    imports: import satellites.components.framers
+    make: satellites.components.framers.ax100_framer(mode = ${mode}, scrambler = ${scrambler}, syncword = ${syncword}, options=${options})
+
+documentation: |-
+    Deframes a signal using one of the two protocols of the GOMspace NanoCom AX100
+
+    Input:
+        PDUs with the packets to be framed
+
+    Output:
+        A stream of soft symbols containing packets to AX100 transceiver
+
+    Parameters:
+        Mode: indicates the AX100 mode (protocol), which can be ASM+Golay or Reed Solomon
+        Scrambler: enables or disables the CCSDS synchronous scrambler (only ASM+Golay mode)
+        Syncword: syncword to use
+        Command line options: options to pass down to the block, following the syntax of the gr_satellites command line tool
+
+file_format: 1
