@@ -1,6 +1,6 @@
 /* -*- c++ -*- */
 /*
- * Copyright 2016,2020 Daniel Estevez <daniel@destevez.net>
+ * Copyright 2023 Jan Gromes <gromes.jan@gmail.com>
  *
  * This file is part of gr-satellites
  *
