@@ -1,0 +1,37 @@
+id: satellites_pdu_insert_bytes
+label: Insert bytes to PDU
+category: '[Satellites]/PDU'
+
+parameters:
+-   id: pos
+    label: Position
+    dtype: int
+    default: 0
+-   id: bytes
+    label: Hexadecimal string
+    dtype: string
+    default: ''
+
+inputs:
+-   domain: message
+    id: in
+
+outputs:
+-   domain: message
+    id: out
+
+templates:
+    imports: import satellites
+    make: satellites.pdu_insert_bytes(${pos}, ${bytes})
+
+documentation: |-
+    Adds some bytes to a given position in a PDU.
+
+    Output:
+        A PDU containing the newly added bytes.
+
+    Parameters:
+        Pos: position in the original PDU, before which the new data will be inserted.
+        Bytes: Hex-encoded string to add (e.g. 'deadbeef').
+
+file_format: 1

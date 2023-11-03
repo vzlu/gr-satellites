@@ -49,6 +49,7 @@ list(APPEND satellites_python_files
     nusat_decoder_python.cc
     pdu_add_meta_python.cc
     pdu_head_tail_python.cc
+    pdu_insert_bytes_python.cc
     pdu_length_filter_python.cc
     pdu_scrambler_python.cc
     phase_unwrap_python.cc

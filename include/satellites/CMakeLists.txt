@@ -45,6 +45,7 @@ install(FILES
     pdu_head_tail.h
     pdu_length_filter.h
     pdu_scrambler.h
+    pdu_insert_bytes.h
     phase_unwrap.h
     selector.h
     u482c_decode.h
