@@ -36,7 +36,8 @@ class ax100_framer(gr.hier_block2, options_block):
         syncword: syncword to use (str)
         options: Options from argparse
     """
-    def __init__(self, mode, scrambler='CCSDS', syncword=_syncword, options=None):
+    def __init__(self, mode, scrambler='CCSDS', syncword=_syncword, 
+        options=None):
         gr.hier_block2.__init__(
             self,
             'ax100_framer',
@@ -54,24 +55,42 @@ class ax100_framer(gr.hier_block2, options_block):
 
         if mode == 'RS':
             raise Exception("RS mode not yet supported")
-        
-        self.fec = u482c_encode(self.options.verbose_fec, 0, 1 if scrambler == 'CCSDS' else 0, 1)
+
+        self.fec = u482c_encode(self.options.verbose_fec, 0,
+            1 if scrambler == 'CCSDS' else 0, 1)
         self.insert_syncword = pdu_insert_bytes(0, syncword)
         self.insert_preamble = pdu_insert_bytes(0, _preamble_len*_preamble)
         self.framer = pdu_to_tagged_stream(gr.types.byte_t, 'packet_len')
         self.repack = repack_bits_bb(8, 1, '', False, gr.GR_LSB_FIRST)
         self.convert = uchar_to_float()
 
-        #if mode == 'RS':
-        #    self._blocks.append(self.scrambler)
+        self.msg_connect(
+            (self, 'in'),
+            (self.fec, 'in'))
 
-        self.msg_connect((self, 'in'), (self.fec, 'in'))
-        self.msg_connect((self.fec, 'out'), (self.insert_syncword, 'in'))
-        self.msg_connect((self.insert_syncword, 'out'), (self.insert_preamble, 'in'))
-        self.msg_connect((self.insert_preamble, 'out'), (self.framer, 'pdus'))
-        self.connect((self.framer, 0), (self.repack, 0))
-        self.connect((self.repack, 0), (self.convert, 0))
-        self.connect((self.convert, 0), (self, 0))
+        self.msg_connect(
+            (self.fec, 'out'),
+            (self.insert_syncword, 'in'))
+
+        self.msg_connect(
+            (self.insert_syncword, 'out'),
+            (self.insert_preamble, 'in'))
+
+        self.msg_connect(
+            (self.insert_preamble, 'out'),
+            (self.framer, 'pdus'))
+
+        self.connect(
+            (self.framer, 0),
+            (self.repack, 0))
+
+        self.connect(
+            (self.repack, 0),
+            (self.convert, 0))
+
+        self.connect(
+            (self.convert, 0),
+            (self, 0))
 
     @classmethod
     def add_options(cls, parser):

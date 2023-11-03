@@ -142,7 +142,7 @@ void u482c_encode_impl::msg_handler(pmt::pmt_t pmt_msg)
     encode_golay24(&length_field);
     d_data[0] = (length_field & 0xff0000) >> 16;
     d_data[1] = (length_field & 0x00ff00) >> 8;
-    d_data[2] =  length_field & 0x0000ff;
+    d_data[2] = length_field & 0x0000ff;
 
     // Send via GNU Radio message
     message_port_pub(pmt::mp("out"),
