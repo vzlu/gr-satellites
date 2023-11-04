@@ -27,7 +27,7 @@ class ax100_framer(gr.hier_block2, options_block):
     Hierarchical block to frame the GOMspace AX100 protocols.
 
     The input are PDUs with frames (assumed to be CSP frames).
-    The output is a float stream of soft symbols.
+    The output is a stream of bytes.
 
     Args:
         mode: mode to use ('RS' or 'ASM') (string)
@@ -42,7 +42,7 @@ class ax100_framer(gr.hier_block2, options_block):
             self,
             'ax100_framer',
             gr.io_signature(0, 0, 0),
-            gr.io_signature(1, 1, gr.sizeof_float))
+            gr.io_signature(1, 1, gr.sizeof_char))
         options_block.__init__(self, options)
 
         if scrambler not in ['CCSDS', 'none']:
@@ -61,8 +61,6 @@ class ax100_framer(gr.hier_block2, options_block):
         self.insert_syncword = pdu_insert_bytes(0, syncword)
         self.insert_preamble = pdu_insert_bytes(0, _preamble_len*_preamble)
         self.framer = pdu_to_tagged_stream(gr.types.byte_t, 'packet_len')
-        self.repack = repack_bits_bb(8, 1, '', False, gr.GR_LSB_FIRST)
-        self.convert = uchar_to_float()
 
         self.msg_connect(
             (self, 'in'),
@@ -82,14 +80,6 @@ class ax100_framer(gr.hier_block2, options_block):
 
         self.connect(
             (self.framer, 0),
-            (self.repack, 0))
-
-        self.connect(
-            (self.repack, 0),
-            (self.convert, 0))
-
-        self.connect(
-            (self.convert, 0),
             (self, 0))
 
     @classmethod
