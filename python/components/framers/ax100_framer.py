@@ -37,8 +37,8 @@ class ax100_framer(gr.hier_block2, options_block):
         preamble_len: preamble length (int)
         options: Options from argparse
     """
-    def __init__(self, mode, scrambler='CCSDS', syncword=_syncword, preamble_len=_preamble_len,
-                 options=None):
+    def __init__(self, mode, scrambler='CCSDS', syncword=_syncword,
+                 preamble_len=_preamble_len, options=None):
         gr.hier_block2.__init__(
             self,
             'ax100_framer',
