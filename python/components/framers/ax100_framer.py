@@ -34,10 +34,11 @@ class ax100_framer(gr.hier_block2, options_block):
         scrambler: scrambler to use, either 'CCSDS' or 'none'
                    (only for ASM mode) (str)
         syncword: syncword to use (str)
+        preamble_len: preamble length (int)
         options: Options from argparse
     """
     def __init__(self, mode, scrambler='CCSDS', syncword=_syncword,
-                 options=None):
+                 preamble_len=_preamble_len, options=None):
         gr.hier_block2.__init__(
             self,
             'ax100_framer',
@@ -59,7 +60,7 @@ class ax100_framer(gr.hier_block2, options_block):
         self.fec = u482c_encode(
             self.options.verbose_fec, 0, 1 if scrambler == 'CCSDS' else 0, 1)
         self.insert_syncword = pdu_insert_bytes(0, syncword)
-        self.insert_preamble = pdu_insert_bytes(0, _preamble_len*_preamble)
+        self.insert_preamble = pdu_insert_bytes(0, preamble_len*_preamble)
         self.framer = pdu_to_tagged_stream(gr.types.byte_t, 'packet_len')
 
         self.msg_connect(

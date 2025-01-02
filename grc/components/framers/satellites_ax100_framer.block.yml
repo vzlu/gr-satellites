@@ -25,6 +25,10 @@ parameters:
     dtype: string
     default: '""'
     hide: part
+-   id: preamble_len
+    label: Preabmle length
+    dtype: int
+    default: 50
 
 inputs:
 -   domain: message
@@ -36,7 +40,7 @@ outputs:
 
 templates:
     imports: import satellites.components.framers
-    make: satellites.components.framers.ax100_framer(mode = ${mode}, scrambler = ${scrambler}, syncword = ${syncword}, options=${options})
+    make: satellites.components.framers.ax100_framer(mode = ${mode}, scrambler = ${scrambler}, syncword = ${syncword}, options=${options}, preamble_len = ${preamble_len})
 
 documentation: |-
     Deframes a signal using one of the two protocols of the GOMspace NanoCom AX100
@@ -51,6 +55,7 @@ documentation: |-
         Mode: indicates the AX100 mode (protocol), which can be ASM+Golay or Reed Solomon
         Scrambler: enables or disables the CCSDS synchronous scrambler (only ASM+Golay mode)
         Syncword: syncword to use
+        Preamble length: preamble length in bytes
         Command line options: options to pass down to the block, following the syntax of the gr_satellites command line tool
 
 file_format: 1

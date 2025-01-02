@@ -30,34 +30,19 @@ namespace py = pybind11;
 void bind_u482c_encode(py::module& m)
 {
 
-    using u482c_encode    = ::gr::satellites::u482c_encode;
+    using u482c_encode = ::gr::satellites::u482c_encode;
 
 
-    py::class_<u482c_encode, gr::block, gr::basic_block,
-        std::shared_ptr<u482c_encode>>(m, "u482c_encode", D(u482c_encode))
+    py::class_<u482c_encode, gr::block, gr::basic_block, std::shared_ptr<u482c_encode>>(
+        m, "u482c_encode", D(u482c_encode))
 
         .def(py::init(&u482c_encode::make),
-           py::arg("verbose"),
-           py::arg("viterbi"),
-           py::arg("scrambler"),
-           py::arg("rs"),
-           D(u482c_encode,make)
-        )
-        
-
+             py::arg("verbose"),
+             py::arg("viterbi"),
+             py::arg("scrambler"),
+             py::arg("rs"),
+             D(u482c_encode, make))
 
 
         ;
-
-
-
-
 }
-
-
-
-
-
-
-
-

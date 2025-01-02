@@ -30,32 +30,20 @@ namespace py = pybind11;
 void bind_pdu_insert_bytes(py::module& m)
 {
 
-    using pdu_insert_bytes    = ::gr::satellites::pdu_insert_bytes;
+    using pdu_insert_bytes = ::gr::satellites::pdu_insert_bytes;
 
 
-    py::class_<pdu_insert_bytes, gr::block, gr::basic_block,
-        std::shared_ptr<pdu_insert_bytes>>(m, "pdu_insert_bytes", D(pdu_insert_bytes))
+    py::class_<pdu_insert_bytes,
+               gr::block,
+               gr::basic_block,
+               std::shared_ptr<pdu_insert_bytes>>(
+        m, "pdu_insert_bytes", D(pdu_insert_bytes))
 
         .def(py::init(&pdu_insert_bytes::make),
-           py::arg("pos"),
-           py::arg("bytes"),
-           D(pdu_insert_bytes,make)
-        )
-        
-
+             py::arg("pos"),
+             py::arg("bytes"),
+             D(pdu_insert_bytes, make))
 
 
         ;
-
-
-
-
 }
-
-
-
-
-
-
-
-
